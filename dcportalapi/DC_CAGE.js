@@ -1,4 +1,10 @@
+const oracledb = require('oracledb');
+
+
 module.exports = function (app) {
+
+
+  
   
     const dc_cage = app.get('/api/DC_CAGE/',(req,res)=>{
 
@@ -20,6 +26,18 @@ module.exports = function (app) {
             query1="";
           };
       
+          async function makeConnection() {
+            try {
+              connection = await oracledb.getConnection({
+                  user: "TMIMS",
+                  password: password,
+                  connectString: "10.54.8.162:1521/BQMDEV"
+              });
+              console.log('connected to database');
+            } catch (err) {
+              console.error(err.message);
+            } finally {
+              if (connection) {
       
         connection.execute(
           `select 
@@ -46,6 +64,13 @@ module.exports = function (app) {
             console.log(query1);
             res.send(result);
          });
+
+        }
+       }
+      }
+     
+      makeConnection()
+
       })
       
 }
