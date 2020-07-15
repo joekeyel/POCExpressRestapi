@@ -63,95 +63,13 @@ var password = 'Tm1m5u5R'
 
 
 
-const callapi = app.get('/api/location',(req,res)=>{
-
-  async function makeConnection() {
-  try {
-    connection = await oracledb.getConnection({
-        user: "TMIMS",
-        password: password,
-        connectString: "10.54.8.162:1521/BQMDEV"
-    });
-    console.log('connected to database');
-  } catch (err) {
-    console.error(err.message);
-  } finally {
-    if (connection) {
-     
-     
-        connection.execute(
-          `SELECT *
-           FROM DC_LOCATION`,
-          [],  
-         function(err, result) {
-            if (err) {
-              console.error(err.message);
-              return;
-            }
-            console.log(result.rows);
-            res.send(result);
-         });
-        }
-      }
-    } 
-      
-    makeConnection()
-  
-
-    
-
- 
-})
-
-const callapi2 = app.get('/api/user',(req,res)=>{
-
-
-  
-  
-  async function makeConnection() {
-    try {
-      connection = await oracledb.getConnection({
-          user: "TMIMS",
-          password: password,
-          connectString: "10.54.8.162:1521/BQMDEV"
-      });
-      console.log('connected to database');
-    } catch (err) {
-      console.error(err.message);
-    } finally {
-      if (connection) {
-
-  connection.execute(
-    `SELECT *
-     FROM DC_USER`,
-    [],  
-   function(err, result) {
-      if (err) {
-        console.error(err.message);
-        return;
-      }
-      console.log(result.rows);
-      res.send({"users":result.rows});
-   });
-
-  }
- }
-}
-
-makeConnection()
-  
-})
-
-
-
-
-
-
-
 //api dc_cage
 require('./dcportalapi/DC_CAGE')(app);
+require('./dcportalapi/DC_USER')(app);
 
 require('./dcportalapi/DC_NE_UTILIZATION')(app);
+
+require('./dcportalapi/DC_LOCATION')(app);
 
 
 

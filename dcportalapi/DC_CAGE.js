@@ -1,5 +1,5 @@
 const oracledb = require('oracledb');
-
+var password = 'Tm1m5u5R' 
 
 module.exports = function (app) {
 
@@ -31,7 +31,7 @@ module.exports = function (app) {
               connection = await oracledb.getConnection({
                   user: "TMIMS",
                   password: password,
-                  connectString: "10.54.8.162:1521/BQMDEV"
+                  connectString: "127.0.0.1:1527/BQMDEV"
               });
               console.log('connected to database');
             } catch (err) {
